@@ -3,12 +3,6 @@ import http from "http";
 import { Logger } from "./business/logger";
 import { container } from "./modules/dependency-injection";
 import { usersRouter } from "./api/routes";
-import {
-  scopePerRequest,
-  scopeLoggerPerRequest,
-  registerRequestContext,
-  requestIdMiddleware,
-} from "./api/middlewares";
 import { config } from "./modules/config";
 
 export class UsersApp {
@@ -21,11 +15,6 @@ export class UsersApp {
     this.logger = container.resolve<Logger>("logger");
     this.port = config.get("server.port");
     this.koa = new Koa();
-
-    this.koa.use(requestIdMiddleware);
-    this.koa.use(scopePerRequest);
-    this.koa.use(registerRequestContext);
-    this.koa.use(scopeLoggerPerRequest);
 
     this.koa.use(usersRouter.middleware());
   }
