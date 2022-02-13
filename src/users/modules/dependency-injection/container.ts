@@ -10,14 +10,9 @@ const container = Awilix.createContainer({
 });
 
 container.register({
-  // controllers
   usersGetController: Awilix.asClass(UsersGetController),
-
-  // services
   userRepository: Awilix.asClass(InMemoryUserRepository),
   userFinder: Awilix.asClass(UserFinder),
-
-  // shared
   logger: Awilix.asClass(PinoLogger).inject(() => {
     return {
       level: config.get("logger.level"),
